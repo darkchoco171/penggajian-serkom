@@ -1,0 +1,138 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Models\PeriodeGaji;
+use App\Models\Karyawan;
+use App\Models\SlipGaji;
+use App\Libraries\PenggajianService;
+
+class PenggajianController extends BaseController
+{
+    protected $periodeModel;
+    protected $karyawanModel;
+    protected $slipGajiModel;
+    protected $penggajianService;
+
+    public function __construct()
+    {
+        $this->periodeModel = new PeriodeGaji();
+        $this->karyawanModel = new Karyawan();
+        $this->slipGajiModel = new SlipGaji();
+        $this->penggajianService = new PenggajianService();
+    }
+
+    // Menampilkan daftar periode gaji yang bisa diproses
+    public function index()
+    {
+        $data = [
+            'title' => 'Proses Penggajian',
+            'periode' => $this->periodeModel->findAll(),
+        ];
+        return view('penggajian/index', $data);
+    }
+
+    // Tambahkan 2 method baru di dalam PenggajianController.php yang sudah ada
+
+    public function createPeriode()
+    {
+        return view('penggajian/form_periode', ['title' => 'Tambah Periode Gaji']);
+    }
+
+    public function storePeriode()
+    {
+        $rules = [
+            'bulan' => 'required|numeric|greater_than[0]|less_than_equal_to[12]',
+            'tahun' => 'required|numeric',
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $bulan = $this->request->getPost('bulan');
+        $tahun = $this->request->getPost('tahun');
+
+        // Cek duplikat: jangan sampai ada 2 periode yang sama
+        $sudahAda = $this->periodeModel->where('bulan', $bulan)->where('tahun', $tahun)->first();
+        if ($sudahAda) {
+            return redirect()->back()->withInput()->with('errors', ['bulan' => 'Periode ini sudah ada']);
+        }
+
+        $this->periodeModel->save([
+            'bulan' => $bulan,
+            'tahun' => $tahun,
+            'status' => 'draft',
+        ]);
+
+        return redirect()->to('penggajian')->with('success', 'Periode gaji berhasil ditambahkan');
+    }
+
+    // Menampilkan preview perhitungan gaji semua karyawan untuk 1 periode (belum disimpan)
+    public function proses($idPeriode)
+    {
+        $periode = $this->periodeModel->find($idPeriode);
+        if (!$periode) {
+            return redirect()->to('penggajian')->with('error', 'Periode tidak ditemukan');
+        }
+
+        $semuaKaryawan = $this->karyawanModel->findAll();
+        $preview = [];
+
+        foreach ($semuaKaryawan as $k) {
+            $hasil = $this->penggajianService->hitungGajiKaryawan(
+                $k['id'],
+                $periode['bulan'],
+                $periode['tahun']
+            );
+            $preview[] = array_merge(['nama' => $k['nama'], 'nik' => $k['nik']], $hasil);
+        }
+
+        $data = [
+            'title' => 'Preview Proses Gaji',
+            'periode' => $periode,
+            'preview' => $preview,
+        ];
+        return view('penggajian/proses', $data);
+    }
+
+    // Menjalankan proses: hitung ulang & simpan permanen ke tabel slip_gaji
+    public function jalankan($idPeriode)
+    {
+        $periode = $this->periodeModel->find($idPeriode);
+        if (!$periode) {
+            return redirect()->to('penggajian')->with('error', 'Periode tidak ditemukan');
+        }
+
+        // Hapus slip gaji lama untuk periode ini (kalau pernah diproses sebelumnya)
+        // supaya tidak dobel kalau tombol "Proses" diklik lagi
+        $this->slipGajiModel->where('id_periode', $idPeriode)->delete();
+
+        $semuaKaryawan = $this->karyawanModel->findAll();
+
+        foreach ($semuaKaryawan as $k) {
+            $hasil = $this->penggajianService->hitungGajiKaryawan(
+                $k['id'],
+                $periode['bulan'],
+                $periode['tahun']
+            );
+
+            $this->slipGajiModel->save([
+                'id_karyawan' => $k['id'],
+                'id_periode' => $idPeriode,
+                'gaji_pokok' => $hasil['gaji_pokok'],
+                'total_tunjangan' => $hasil['total_tunjangan'],
+                'total_lembur' => $hasil['total_lembur'],
+                'total_potongan' => $hasil['total_potongan'],
+                'pph21' => $hasil['pph21'],
+                'gaji_bersih' => $hasil['gaji_bersih'],
+            ]);
+        }
+
+        // Update status periode jadi final
+        $this->periodeModel->update($idPeriode, ['status' => 'final']);
+
+        return redirect()->to('slip-gaji/rekap/' . $idPeriode)
+            ->with('success', 'Gaji berhasil diproses untuk semua karyawan');
+    }
+}
