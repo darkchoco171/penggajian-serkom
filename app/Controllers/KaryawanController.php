@@ -39,7 +39,7 @@ class KaryawanController extends BaseController
     {
         $rules = [
             'nama' => 'required|min_length[3]',
-            'nik' => 'required|is_unique[karyawan.nik]',
+            'nik' => 'required|exact_length[16]|numeric|is_unique[karyawan.nik]',
             'id_jabatan' => 'required|numeric',
             'status' => 'required|in_list[tetap,kontrak]',
             'tgl_masuk' => 'required|valid_date',
@@ -79,7 +79,7 @@ class KaryawanController extends BaseController
     {
         $rules = [
             'nama' => 'required|min_length[3]',
-            'nik' => "required|is_unique[karyawan.nik,id,{$id}]",
+            'nik' => 'required|exact_length[16]|numeric|is_unique[karyawan.nik]',
             'id_jabatan' => 'required|numeric',
             'status' => 'required|in_list[tetap,kontrak]',
             'tgl_masuk' => 'required|valid_date',

@@ -39,6 +39,7 @@ class AbsensiController extends BaseController
         $rules = [
             'id_karyawan' => 'required|numeric',
             'tanggal' => 'required|valid_date',
+            'status' => 'required|in_list[hadir,izin,sakit,alpha,cuti]',
             'jam_masuk' => 'permit_empty',
             'jam_keluar' => 'permit_empty',
             'jam_lembur' => 'permit_empty|numeric|greater_than_equal_to[0]',
@@ -51,6 +52,7 @@ class AbsensiController extends BaseController
         $this->absensiModel->save([
             'id_karyawan' => $this->request->getPost('id_karyawan'),
             'tanggal' => $this->request->getPost('tanggal'),
+            'status' => $this->request->getPost('status'),
             'jam_masuk' => $this->request->getPost('jam_masuk') ?: null,
             'jam_keluar' => $this->request->getPost('jam_keluar') ?: null,
             'jam_lembur' => $this->request->getPost('jam_lembur') ?: 0,

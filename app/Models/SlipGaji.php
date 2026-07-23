@@ -12,8 +12,8 @@ class SlipGaji extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [
-        'id_karyawan', 'id_periode', 'gaji_pokok', 'total_tunjangan',
+    protected $allowedFields = [
+        'id_karyawan', 'id_periode', 'gaji_pokok', 'jumlah_hari_masuk', 'total_tunjangan',
         'total_lembur', 'total_potongan', 'pph21', 'gaji_bersih',
     ];
 

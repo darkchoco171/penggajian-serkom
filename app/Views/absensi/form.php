@@ -33,6 +33,18 @@
         <input type="date" name="tanggal" class="form-control" value="<?= old('tanggal') ?>" required>
     </div>
 
+    <div class="mb-3">
+        <label class="form-label">Status</label>
+        <select name="status" class="form-select" required>
+            <option value="hadir">Hadir</option>
+            <option value="izin">Izin</option>
+            <option value="sakit">Sakit</option>
+            <option value="alpha">Alpha (tanpa keterangan)</option>
+            <option value="cuti">Cuti</option>
+        </select>
+        <div class="form-text">Sistem berasumsi karyawan hadir penuh; catat di sini HANYA jika ada pengecualian (izin/sakit/alpha/cuti) atau lembur.</div>
+    </div>
+
     <div class="row">
         <div class="col-md-6 mb-3">
             <label class="form-label">Jam Masuk</label>

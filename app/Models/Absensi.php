@@ -50,4 +50,13 @@ class Absensi extends Model
                     ->where('YEAR(tanggal)', $tahun)
                     ->first()['jam_lembur'] ?? 0;
     }
+
+    public function getJumlahHariTidakMasuk($idKaryawan, $bulan, $tahun)
+    {
+        return $this->where('id_karyawan', $idKaryawan)
+                    ->where('MONTH(tanggal)', $bulan)
+                    ->where('YEAR(tanggal)', $tahun)
+                    ->whereIn('status', ['izin', 'sakit', 'alpha', 'cuti'])
+                    ->countAllResults();
+    }
 }

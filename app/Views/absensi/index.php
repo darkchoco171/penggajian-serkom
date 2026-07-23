@@ -15,6 +15,7 @@
         <tr>
             <th>Nama Karyawan</th>
             <th>Tanggal</th>
+            <th>Status</th>
             <th>Jam Masuk</th>
             <th>Jam Keluar</th>
             <th>Jam Lembur</th>
@@ -29,6 +30,18 @@
                 <tr>
                     <td><?= esc($a['nama']) ?></td>
                     <td><?= esc($a['tanggal']) ?></td>
+                    <td>
+                        <?php
+                        $warnaBadge = match($a['status']) {
+                            'hadir' => 'bg-success',
+                            'izin', 'cuti' => 'bg-info text-dark',
+                            'sakit' => 'bg-warning text-dark',
+                            'alpha' => 'bg-danger',
+                            default => 'bg-secondary',
+                        };
+                        ?>
+                        <span class="badge <?= $warnaBadge ?>"><?= esc(strtoupper($a['status'])) ?></span>
+                    </td>
                     <td><?= esc($a['jam_masuk'] ?? '-') ?></td>
                     <td><?= esc($a['jam_keluar'] ?? '-') ?></td>
                     <td>

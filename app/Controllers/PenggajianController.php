@@ -121,6 +121,7 @@ class PenggajianController extends BaseController
                 'id_karyawan' => $k['id'],
                 'id_periode' => $idPeriode,
                 'gaji_pokok' => $hasil['gaji_pokok'],
+                'jumlah_hari_masuk' => $hasil['jumlah_hari_masuk'],
                 'total_tunjangan' => $hasil['total_tunjangan'],
                 'total_lembur' => $hasil['total_lembur'],
                 'total_potongan' => $hasil['total_potongan'],

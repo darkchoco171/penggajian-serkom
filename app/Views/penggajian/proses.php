@@ -9,6 +9,7 @@
     <thead class="table-dark">
         <tr>
             <th>Nama</th>
+            <th>Hari Masuk</th>
             <th>Gaji Pokok</th>
             <th>Tunjangan</th>
             <th>Lembur</th>
@@ -24,6 +25,7 @@
             <?php foreach ($preview as $p): ?>
                 <tr>
                     <td><?= esc($p['nama']) ?></td>
+                    <td><?= esc($p['jumlah_hari_masuk']) ?></td>
                     <td>Rp <?= number_format($p['gaji_pokok'], 0, ',', '.') ?></td>
                     <td>Rp <?= number_format($p['total_tunjangan'], 0, ',', '.') ?></td>
                     <td>Rp <?= number_format($p['total_lembur'], 0, ',', '.') ?></td>
