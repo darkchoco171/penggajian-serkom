@@ -1,11 +1,32 @@
 <?= $this->extend('layout/main') ?>
 <?= $this->section('content') ?>
 
-<h2>Slip Gaji</h2>
-<p class="text-muted">
-    <?= esc($slip['nama']) ?> (<?= esc($slip['nik']) ?>) —
-    <?= date('F Y', mktime(0, 0, 0, $slip['bulan'], 1, $slip['tahun'])) ?>
-</p>
+<!-- <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Slip Gaji</h2>
+    <p class="text-muted">
+        <?= esc($slip['nama']) ?> (<?= esc($slip['nip']) ?>) —
+        <?= date('F Y', mktime(0, 0, 0, $slip['bulan'], 1, $slip['tahun'])) ?>
+    </p>
+    <a href="<?= base_url('slip-gaji/cetak-detail/' . $slip['id']); ?>" target="_blank" class="btn btn-primary">
+        Cetak Slip Gaji
+    </a>
+</div> -->
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+    <h3 class="mb-1">Slip Gaji</h3>
+    <p class="mb-0" style="font-size: 16px; font-weight: bold;">
+        <?= $slip['nama']; ?> 
+        <span style="font-weight: normal; color: #6c758d;">(NIP: <?= $slip['nip']; ?>)</span>
+        <br>
+        <span style="font-weight: normal; color: #6c758d;">Periode Gaji: <?= date('F Y', mktime(0, 0, 0, $slip['bulan'], 1, $slip['tahun'])) ?></span>
+    </p>
+    </div>
+    
+    <a href="<?= base_url('slip-gaji/cetak-detail/' . $slip['id']); ?>" target="_blank" class="btn btn-primary">
+        Cetak Slip Gaji
+    </a>
+</div>
 
 <div class="card mb-3">
     <div class="card-header">Ringkasan Gaji</div>

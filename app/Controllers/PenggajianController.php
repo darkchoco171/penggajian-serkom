@@ -85,7 +85,7 @@ class PenggajianController extends BaseController
                 $periode['bulan'],
                 $periode['tahun']
             );
-            $preview[] = array_merge(['nama' => $k['nama'], 'nik' => $k['nik']], $hasil);
+            $preview[] = array_merge(['nama' => $k['nama'], 'nip' => $k['nip']], $hasil);
         }
 
         $data = [

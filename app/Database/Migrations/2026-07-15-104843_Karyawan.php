@@ -11,7 +11,7 @@ class Karyawan extends Migration
         $this->forge->addField([
             'id' => ['type' => 'INT', 'unsigned' => true, 'auto_increment' => true],
             'nama' => ['type' => 'VARCHAR', 'constraint' => 100],
-            'nik' => ['type' => 'VARCHAR', 'constraint' => 20, 'unique' => true],
+            'nip' => ['type' => 'VARCHAR', 'constraint' => 20, 'unique' => true],
             'id_jabatan' => ['type' => 'INT', 'unsigned' => true],
             'status' => ['type' => 'ENUM', 'constraint' => ['tetap', 'kontrak']],
             'tgl_masuk' => ['type' => 'DATE'],

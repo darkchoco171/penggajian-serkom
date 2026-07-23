@@ -11,7 +11,7 @@
     <thead class="table-dark">
         <tr>
             <th>Nama</th>
-            <th>NIK</th>
+            <th>NIP</th>
             <th>Gaji Bersih</th>
             <th width="120">Aksi</th>
         </tr>
@@ -23,7 +23,7 @@
             <?php foreach ($slip as $s): ?>
                 <tr>
                     <td><?= esc($s['nama']) ?></td>
-                    <td><?= esc($s['nik']) ?></td>
+                    <td><?= esc($s['nip']) ?></td>
                     <td><strong>Rp <?= number_format($s['gaji_bersih'], 0, ',', '.') ?></strong></td>
                     <td>
                         <a href="<?= base_url('slip-gaji/detail/' . $s['id']) ?>" class="btn btn-sm btn-info">Detail</a>

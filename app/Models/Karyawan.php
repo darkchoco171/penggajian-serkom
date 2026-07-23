@@ -12,7 +12,7 @@ class Karyawan extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nama', 'nik', 'id_jabatan', 'status', 'tgl_masuk'];
+    protected $allowedFields    = ['nama', 'nip', 'id_jabatan', 'status', 'tgl_masuk'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

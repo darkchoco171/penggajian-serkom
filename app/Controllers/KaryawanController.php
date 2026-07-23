@@ -39,7 +39,7 @@ class KaryawanController extends BaseController
     {
         $rules = [
             'nama' => 'required|min_length[3]',
-            'nik' => 'required|exact_length[16]|numeric|is_unique[karyawan.nik]',
+            'nip' => 'required|exact_length[16]|numeric|is_unique[karyawan.nip]',
             'id_jabatan' => 'required|numeric',
             'status' => 'required|in_list[tetap,kontrak]',
             'tgl_masuk' => 'required|valid_date',
@@ -51,7 +51,7 @@ class KaryawanController extends BaseController
 
         $this->karyawanModel->save([
             'nama' => $this->request->getPost('nama'),
-            'nik' => $this->request->getPost('nik'),
+            'nip' => $this->request->getPost('nip'),
             'id_jabatan' => $this->request->getPost('id_jabatan'),
             'status' => $this->request->getPost('status'),
             'tgl_masuk' => $this->request->getPost('tgl_masuk'),
@@ -79,7 +79,7 @@ class KaryawanController extends BaseController
     {
         $rules = [
             'nama' => 'required|min_length[3]',
-            'nik' => 'required|exact_length[16]|numeric|is_unique[karyawan.nik]',
+            'nip' => 'required|exact_length[16]|numeric|is_unique[karyawan.nip]',
             'id_jabatan' => 'required|numeric',
             'status' => 'required|in_list[tetap,kontrak]',
             'tgl_masuk' => 'required|valid_date',
@@ -91,7 +91,7 @@ class KaryawanController extends BaseController
 
         $this->karyawanModel->update($id, [
             'nama' => $this->request->getPost('nama'),
-            'nik' => $this->request->getPost('nik'),
+            'nip' => $this->request->getPost('nip'),
             'id_jabatan' => $this->request->getPost('id_jabatan'),
             'status' => $this->request->getPost('status'),
             'tgl_masuk' => $this->request->getPost('tgl_masuk'),

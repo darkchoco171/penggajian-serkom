@@ -22,7 +22,7 @@
             <option value="">-- Pilih Karyawan --</option>
             <?php foreach ($daftarKaryawan as $k): ?>
                 <option value="<?= $k['id'] ?>" data-gaji-pokok="<?= $k['gaji_pokok'] ?>">
-                    <?= esc($k['nama']) ?> (<?= esc($k['nik']) ?>)
+                    <?= esc($k['nama']) ?> (<?= esc($k['nip']) ?>)
                 </option>
             <?php endforeach; ?>
         </select>

@@ -49,7 +49,7 @@ class SlipGajiController extends BaseController
     public function detail($idSlip)
     {
         $slip = $this->slipGajiModel
-            ->select('slip_gaji.*, karyawan.nama, karyawan.nik, periode_gaji.bulan, periode_gaji.tahun')
+            ->select('slip_gaji.*, karyawan.nama, karyawan.nip, periode_gaji.bulan, periode_gaji.tahun')
             ->join('karyawan', 'karyawan.id = slip_gaji.id_karyawan')
             ->join('periode_gaji', 'periode_gaji.id = slip_gaji.id_periode')
             ->find($idSlip);
@@ -71,5 +71,50 @@ class SlipGajiController extends BaseController
             'rincianPotongan' => $rincianPotongan,
         ];
         return view('slip_gaji/detail', $data);
+    }
+
+    // Method untuk cetak slip gaji 1 karyawan
+    public function cetakDetail($idSlip)
+    {
+        $slip = $this->slipGajiModel
+            ->select('slip_gaji.*, karyawan.nama, karyawan.nip, periode_gaji.bulan, periode_gaji.tahun')
+            ->join('karyawan', 'karyawan.id = slip_gaji.id_karyawan')
+            ->join('periode_gaji', 'periode_gaji.id = slip_gaji.id_periode')
+            ->find($idSlip);
+
+        if (!$slip) {
+            return redirect()->to('slip-gaji')->with('error', 'Slip gaji tidak ditemukan');
+        }
+
+        $periodeFormat = sprintf('%04d-%02d', $slip['tahun'], $slip['bulan']);
+        $rincianPotongan = $this->potonganModel
+            ->where('id_karyawan', $slip['id_karyawan'])
+            ->where('periode', $periodeFormat)
+            ->findAll();
+
+        $data = [
+            'slip' => $slip,
+            'rincianPotongan' => $rincianPotongan,
+        ];
+
+        // Panggil view khusus cetak
+        return view('slip_gaji/cetak_detail', $data);
+    }
+
+    // Method untuk cetak rekap semua karyawan
+    public function cetakRekap($idPeriode)
+    {
+        $periode = $this->periodeModel->find($idPeriode);
+        if (!$periode) {
+            return redirect()->to('slip-gaji')->with('error', 'Periode tidak ditemukan');
+        }
+
+        $data = [
+            'periode' => $periode,
+            'slip' => $this->slipGajiModel->getRekapPerPeriode($idPeriode),
+        ];
+
+        // Panggil view khusus cetak
+        return view('slip_gaji/cetak_rekap', $data);
     }
 }

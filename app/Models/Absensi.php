@@ -12,7 +12,7 @@ class Absensi extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_karyawan', 'tanggal', 'jam_masuk', 'jam_keluar', 'jam_lembur'];
+    protected $allowedFields    = ['id_karyawan', 'tanggal', 'jam_masuk', 'jam_keluar', 'jam_lembur', 'status'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -44,18 +44,24 @@ class Absensi extends Model
     // Total lembur per karyawan dalam satu bulan, dipakai saat proses hitung gaji
     public function getTotalLembur($idKaryawan, $bulan, $tahun)
     {
+        $tanggalAwal  = sprintf('%04d-%02d-01', $tahun, $bulan);
+        $tanggalAkhir = date('Y-m-t', strtotime($tanggalAwal));
+
         return $this->selectSum('jam_lembur')
                     ->where('id_karyawan', $idKaryawan)
-                    ->where('MONTH(tanggal)', $bulan)
-                    ->where('YEAR(tanggal)', $tahun)
+                    ->where('tanggal >=', $tanggalAwal)
+                    ->where('tanggal <=', $tanggalAkhir)
                     ->first()['jam_lembur'] ?? 0;
     }
 
     public function getJumlahHariTidakMasuk($idKaryawan, $bulan, $tahun)
     {
+        $tanggalAwal  = sprintf('%04d-%02d-01', $tahun, $bulan);
+        $tanggalAkhir = date('Y-m-t', strtotime($tanggalAwal));
+
         return $this->where('id_karyawan', $idKaryawan)
-                    ->where('MONTH(tanggal)', $bulan)
-                    ->where('YEAR(tanggal)', $tahun)
+                    ->where('tanggal >=', $tanggalAwal)
+                    ->where('tanggal <=', $tanggalAkhir)
                     ->whereIn('status', ['izin', 'sakit', 'alpha', 'cuti'])
                     ->countAllResults();
     }

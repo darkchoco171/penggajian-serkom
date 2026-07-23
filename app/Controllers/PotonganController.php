@@ -103,7 +103,7 @@ class PotonganController extends BaseController
     private function getKaryawanDenganGajiPokok()
     {
         return $this->karyawanModel
-            ->select('karyawan.id, karyawan.nama, karyawan.nik, jabatan.gaji_pokok')
+            ->select('karyawan.id, karyawan.nama, karyawan.nip, jabatan.gaji_pokok')
             ->join('jabatan', 'jabatan.id = karyawan.id_jabatan')
             ->findAll();
     }

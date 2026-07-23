@@ -14,7 +14,7 @@
     <thead class="table-dark">
         <tr>
             <th>Nama</th>
-            <th>NIK</th>
+            <th>NIP</th>
             <th>Jabatan</th>
             <th>Status</th>
             <th>Tgl Masuk</th>
@@ -28,7 +28,7 @@
             <?php foreach ($karyawan as $k): ?>
                 <tr>
                     <td><?= esc($k['nama']) ?></td>
-                    <td><?= esc($k['nik']) ?></td>
+                    <td><?= esc($k['nip']) ?></td>
                     <td><?= esc($k['nama_jabatan']) ?></td>
                     <td>
                         <span class="badge <?= $k['status'] === 'tetap' ? 'bg-success' : 'bg-warning text-dark' ?>">

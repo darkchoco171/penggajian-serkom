@@ -47,7 +47,7 @@ class SlipGaji extends Model
     // Rekap slip gaji lengkap dengan nama karyawan, dipakai di halaman Rekap
     public function getRekapPerPeriode($idPeriode)
     {
-        return $this->select('slip_gaji.*, karyawan.nama, karyawan.nik')
+        return $this->select('slip_gaji.*, karyawan.nama, karyawan.nip')
                     ->join('karyawan', 'karyawan.id = slip_gaji.id_karyawan')
                     ->where('id_periode', $idPeriode)
                     ->findAll();
