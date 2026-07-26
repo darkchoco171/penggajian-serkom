@@ -75,6 +75,21 @@ class PenggajianIntegrationTest extends CIUnitTestCase
         $result->assertSee('Budi Test');
     }
 
+    public function testHalamanEditPeriodeBisaDiakses()
+    {
+        $periodeModel = new PeriodeGaji();
+        $periode = $periodeModel->where('bulan', 10)->where('tahun', 2023)->first();
+
+        $result = $this->withSession([
+            'user_id'    => 1,
+            'nama'       => 'Admin Test',
+            'isLoggedIn' => true
+        ])->get('penggajian/edit/' . $periode['id']);
+
+        $result->assertStatus(200);
+        $result->assertSee('Edit Periode Gaji');
+    }
+
     public function testHalamanCetakRekapBisaDiakses()
     {
         // 1. Siapkan data slip gaji dummy untuk karyawan Budi Test

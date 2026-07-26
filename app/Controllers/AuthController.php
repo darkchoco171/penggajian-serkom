@@ -36,7 +36,7 @@ class AuthController extends BaseController
             'isLoggedIn' => true,
         ]);
 
-        return redirect()->to('/')->with('success', 'Login berhasil');
+        return redirect()->to('dashboard')->with('success', 'Login berhasil');
     }
 
     public function logout()

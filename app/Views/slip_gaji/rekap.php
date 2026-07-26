@@ -1,7 +1,18 @@
 <?= $this->extend('layout/main') ?>
 <?= $this->section('content') ?>
 
-<h2>Rekap Gaji — <?= date('F Y', mktime(0, 0, 0, $periode['bulan'], 1, $periode['tahun'])) ?></h2>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h3 class="mb-0">Rekap Gaji Karyawan</h3>
+        <p class="text-muted mb-0">Periode: <?= $periode['bulan']; ?> - <?= $periode['tahun']; ?></p>
+    </div>
+    <a href="<?= base_url('slip-gaji/cetak-rekap/' . $periode['id']); ?>" target="_blank" class="btn btn-success">
+        <i class="bi bi-printer"></i> Cetak Rekap PDF
+    </a>
+</div>
+<hr>
+
+<!-- <h2>Rekap Gaji — <?= date('F Y', mktime(0, 0, 0, $periode['bulan'], 1, $periode['tahun'])) ?></h2> -->
 
 <?php if (session()->getFlashdata('success')): ?>
     <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>

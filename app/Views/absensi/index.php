@@ -19,7 +19,7 @@
             <th>Jam Masuk</th>
             <th>Jam Keluar</th>
             <th>Jam Lembur</th>
-            <th width="100">Aksi</th>
+            <th width="200">Aksi</th>
         </tr>
     </thead>
     <tbody>
@@ -52,6 +52,7 @@
                         <?php endif; ?>
                     </td>
                     <td>
+                        <a href="<?= base_url('absensi/edit/' . $a['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
                         <a href="<?= base_url('absensi/delete/' . $a['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus data ini?')">Hapus</a>
                     </td>
                 </tr>

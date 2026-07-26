@@ -22,7 +22,7 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label">NIK</label>
+        <label class="form-label">NIP</label>
         <input type="text" name="nip" class="form-control" value="<?= old('nip', $karyawan['nip'] ?? '') ?>" required>
     </div>
 

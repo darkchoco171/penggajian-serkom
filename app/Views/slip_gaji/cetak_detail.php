@@ -85,7 +85,7 @@
         
         <p style="text-align:center; margin-top:30px; font-size: 11px;">
             Slip ini dicetak secara otomatis oleh sistem. <br>
-            Bandung, <?= date('d-m-Y'); ?>
+            Jakarta, <?= date('d-m-Y'); ?>
         </p>
     </div>
 

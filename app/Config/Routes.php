@@ -3,7 +3,9 @@
 use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
-$routes->get('/', 'Home::index');
+$routes->get('/', function() {
+    return view('welcome_message');
+});
 
 // Routes.php
 
@@ -14,7 +16,7 @@ $routes->get('logout', 'AuthController::logout');
 
 // SEMUA route yang sudah ada, dibungkus filter 'auth'
 $routes->group('', ['filter' => 'auth'], function ($routes) {
-    $routes->get('/', 'Home::index');
+    $routes->get('dashboard', 'DashboardController::index');
 
     $routes->get('jabatan', 'JabatanController::index');
     $routes->get('jabatan/create', 'JabatanController::create');
@@ -33,6 +35,8 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('absensi', 'AbsensiController::index');
     $routes->get('absensi/create', 'AbsensiController::create');
     $routes->post('absensi/store', 'AbsensiController::store');
+    $routes->get('absensi/edit/(:num)', 'AbsensiController::edit/$1');
+    $routes->post('absensi/update/(:num)', 'AbsensiController::update/$1');
     $routes->get('absensi/delete/(:num)', 'AbsensiController::delete/$1');
 
     $routes->get('potongan', 'PotonganController::index');
@@ -45,6 +49,9 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('penggajian/jalankan/(:num)', 'PenggajianController::jalankan/$1');
     $routes->get('penggajian/tambah-periode', 'PenggajianController::createPeriode');
     $routes->post('penggajian/store-periode', 'PenggajianController::storePeriode');
+    $routes->get('penggajian/edit/(:num)', 'PenggajianController::edit/$1');
+    $routes->post('penggajian/update/(:num)', 'PenggajianController::update/$1');
+    $routes->get('penggajian/delete/(:num)', 'PenggajianController::delete/$1');
 
     $routes->get('slip-gaji', 'SlipGajiController::index');
     $routes->get('slip-gaji/rekap/(:num)', 'SlipGajiController::rekap/$1');
@@ -53,23 +60,23 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('slip-gaji/cetak-rekap/(:num)', 'SlipGajiController::cetakRekap/$1');
 });
 
-// Route sementara untuk test
- $routes->get('/test-gaji', function () {
-    $service = new \App\Libraries\PenggajianService();
+// // Route sementara untuk test
+//  $routes->get('/test-gaji', function () {
+//     $service = new \App\Libraries\PenggajianService();
 
-    echo "<h3>Test 1: Pajak 0%</h3>";
-    echo "PPh21 untuk 4.000.000 = " . $service->hitungPPh21(4000000) . "<br>";
+//     echo "<h3>Test 1: Pajak 0%</h3>";
+//     echo "PPh21 untuk 4.000.000 = " . $service->hitungPPh21(4000000) . "<br>";
 
-    echo "<h3>Test 2: Pajak 5%</h3>";
-    echo "PPh21 untuk 8.000.000 = " . $service->hitungPPh21(8000000) . "<br>";
+//     echo "<h3>Test 2: Pajak 5%</h3>";
+//     echo "PPh21 untuk 8.000.000 = " . $service->hitungPPh21(8000000) . "<br>";
 
-    echo "<h3>Test 3: Prorata (Akses Private Method)</h3>";
-    $method = new \ReflectionMethod($service, 'hitungUpahProrata');
-    $method->setAccessible(true);
+//     echo "<h3>Test 3: Prorata (Akses Private Method)</h3>";
+//     $method = new \ReflectionMethod($service, 'hitungUpahProrata');
+//     $method->setAccessible(true);
     
-    // Gaji Pokok 5.000.000, Tunjangan 1.000.000, Masuk 15 hari
-    $hasil = $method->invoke($service, 5000000, 1000000, 15);
+//     // Gaji Pokok 5.000.000, Tunjangan 1.000.000, Masuk 15 hari
+//     $hasil = $method->invoke($service, 5000000, 1000000, 15);
     
-    echo "Gaji Pokok (Masuk 15 hari) = " . $hasil['gaji_pokok'] . "<br>";
-    echo "Tunjangan (Masuk 15 hari) = " . $hasil['tunjangan'] . "<br>";
-});
+//     echo "Gaji Pokok (Masuk 15 hari) = " . $hasil['gaji_pokok'] . "<br>";
+//     echo "Tunjangan (Masuk 15 hari) = " . $hasil['tunjangan'] . "<br>";
+// });

@@ -49,6 +49,7 @@ class Absensi extends Model
 
         return $this->selectSum('jam_lembur')
                     ->where('id_karyawan', $idKaryawan)
+                    ->where('status', 'hadir')
                     ->where('tanggal >=', $tanggalAwal)
                     ->where('tanggal <=', $tanggalAkhir)
                     ->first()['jam_lembur'] ?? 0;
