@@ -5,6 +5,11 @@ use CodeIgniter\Router\RouteCollection;
 /** @var RouteCollection $routes */
 $routes->get('/', 'Home::index');
 
+// Route untuk login dan logout
+$routes->get('login', 'AuthController::login');
+$routes->post('login', 'AuthController::attempt');
+$routes->get('logout', 'AuthController::logout');
+
 // SEMUA route yang sudah ada, dibungkus filter 'auth'
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('dashboard', 'DashboardController::index');
