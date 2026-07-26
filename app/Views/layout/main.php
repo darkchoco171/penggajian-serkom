@@ -125,10 +125,12 @@ if (!function_exists('isActive')) {
 
 <nav class="sidebar" id="sidebar">
     <div class="sidebar-brand">
-        <h4 class="mb-0">SIMAJI</h4>
+        <a href="<?= base_url('dashboard') ?>" class="sidebar-brand text-decoration-none" style="color: #fff;">
+            <h4 class="mb-0">SIMAJI</h4>
+        </a>
     </div>
     <div class="sidebar-nav">
-        <a href="<?= base_url() ?>" class="sidebar-link <?= isActive('dashboard', $currentPath) ?>">
+        <a href="<?= base_url('dashboard') ?>" class="sidebar-link <?= isActive('dashboard', $currentPath) ?>">
             <i class="bi bi-grid-1x2-fill"></i> Dashboard
         </a>
         <a href="<?= base_url('karyawan') ?>" class="sidebar-link <?= isActive('karyawan', $currentPath) ?>">

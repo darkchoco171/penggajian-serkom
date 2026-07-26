@@ -3,16 +3,14 @@
 use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
-$routes->get('/', function() {
-    return view('welcome_message');
-});
+$routes->get('/', 'Home::index');
 
 // Routes.php
 
-// TIDAK pakai filter — supaya bisa diakses sebelum login
-$routes->get('login', 'AuthController::login');
-$routes->post('login', 'AuthController::attempt');
-$routes->get('logout', 'AuthController::logout');
+// // TIDAK pakai filter — supaya bisa diakses sebelum login
+// $routes->get('login', 'AuthController::login');
+// $routes->post('login', 'AuthController::attempt');
+// $routes->get('logout', 'AuthController::logout');
 
 // SEMUA route yang sudah ada, dibungkus filter 'auth'
 $routes->group('', ['filter' => 'auth'], function ($routes) {
