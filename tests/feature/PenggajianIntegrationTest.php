@@ -32,7 +32,7 @@ class PenggajianIntegrationTest extends CIUnitTestCase
         $periodeModel->truncate();
         $jabatanModel->truncate();
         
-        // 2. Seed data dummy khusus untuk test integrasi ini
+        // 2. Seed data dummy khusus untuk test integrasi
         $jabatanModel->insert([
             'nama_jabatan' => 'Programmer',
             'gaji_pokok' => 5000000,
@@ -57,21 +57,21 @@ class PenggajianIntegrationTest extends CIUnitTestCase
 
     public function testHalamanProsesPenggajianBisaDiakses()
     {
-        // Ambil ID periode yang baru di-insert
+        // Mengambil ID periode yang baru di-insert
         $periodeModel = new PeriodeGaji();
         $periode = $periodeModel->where('bulan', 10)->where('tahun', 2023)->first();
 
-        // Simulasikan GET request ke URL proses penggajian
+        // Simulasi request proses gaji
         $result = $this->withSession([
             'user_id'    => 1,
             'nama'       => 'Admin Test',
             'isLoggedIn' => true
         ])->get('penggajian/proses/' . $periode['id']);
 
-        // HTTP Status 200 (OK / sukses)
+        // Tes HTTP Status 200 (OK)
         $result->assertStatus(200);
         
-        // Halaman menampilkan teks ini (cek View)
+        // Halaman tampil
         $result->assertSee('Budi Test');
     }
 
@@ -92,7 +92,7 @@ class PenggajianIntegrationTest extends CIUnitTestCase
 
     public function testHalamanCetakRekapBisaDiakses()
     {
-        // 1. Siapkan data slip gaji dummy untuk karyawan Budi Test
+        // 1. Data slip gaji dummy untuk karyawan Budi Test
         $karyawanModel = new Karyawan();
         $periodeModel = new PeriodeGaji();
         $slipGajiModel = new \App\Models\SlipGaji();
@@ -112,17 +112,17 @@ class PenggajianIntegrationTest extends CIUnitTestCase
             'gaji_bersih' => 6000000
         ]);
 
-        // 2. Simulasikan akses ke halaman cetak rekap
+        // 2. Simulasi akses ke halaman cetak rekap
         $result = $this->withSession([
             'user_id'    => 1,
             'nama'       => 'Admin Test',
             'isLoggedIn' => true
         ])->get('slip-gaji/cetak-rekap/' . $periode['id']);
 
-        // 3. HTTP Status 200 (OK)
+        // 3. Tes HTTP Status 200 (OK)
         $result->assertStatus(200);
         
-        // 4. Halaman cetak menampilkan judul laporan dan nama karyawan
+        // 4. Tampilkan judul laporan & nama karyawan
         $result->assertSee('REKAPITULASI GAJI KARYAWAN');
         $result->assertSee('Budi Test');
     }

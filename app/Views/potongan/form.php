@@ -55,6 +55,7 @@
     <a href="<?= base_url('potongan') ?>" class="btn btn-secondary">Batal</a>
 </form>
 
+// Script untuk menghitung otomatis nominal potongan BPJS
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const selectKaryawan = document.getElementById('idKaryawan');

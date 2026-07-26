@@ -6,6 +6,7 @@ use App\Models\Karyawan;
 use App\Models\Absensi;
 use App\Models\KomponenPotongan;
 
+// // Class untuk logika hitung gaji, dipisah dari controller supaya rapi
 class PenggajianService
 {
     // Asumsi standar: 1 bulan ada 21 hari kerja (Senin-Jumat)

@@ -26,7 +26,7 @@
         margin-bottom: 2rem; 
     }
 
-    /* Styling tombol login biar standout */
+    /* Styling tombol login */
     .btn-login-hero {
         font-size: 1.1rem;
         padding: 0.6rem 2.5rem;

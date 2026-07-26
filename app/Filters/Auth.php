@@ -17,6 +17,6 @@ class Auth implements FilterInterface
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        // tidak perlu diisi
+        // Tidak ada tindakan setelah filter
     }
 }

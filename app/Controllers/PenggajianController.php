@@ -32,8 +32,6 @@ class PenggajianController extends BaseController
         return view('penggajian/index', $data);
     }
 
-    // Tambahkan 2 method baru di dalam PenggajianController.php yang sudah ada
-
     public function createPeriode()
     {
         return view('penggajian/form_periode', ['title' => 'Tambah Periode Gaji']);

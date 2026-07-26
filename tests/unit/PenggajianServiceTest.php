@@ -29,7 +29,7 @@ class PenggajianServiceTest extends CIUnitTestCase
 
     public function testHitungUpahProrata()
     {
-        // Pakai reflection untuk akses method private
+        // untuk mengakses method private hitungUpahProrata
         $method = new \ReflectionMethod($this->service, 'hitungUpahProrata');
         $method->setAccessible(true);
 

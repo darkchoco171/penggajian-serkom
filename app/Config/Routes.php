@@ -5,13 +5,6 @@ use CodeIgniter\Router\RouteCollection;
 /** @var RouteCollection $routes */
 $routes->get('/', 'Home::index');
 
-// Routes.php
-
-// // TIDAK pakai filter — supaya bisa diakses sebelum login
-// $routes->get('login', 'AuthController::login');
-// $routes->post('login', 'AuthController::attempt');
-// $routes->get('logout', 'AuthController::logout');
-
 // SEMUA route yang sudah ada, dibungkus filter 'auth'
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('dashboard', 'DashboardController::index');
@@ -57,24 +50,3 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('slip-gaji/cetak-detail/(:num)', 'SlipGajiController::cetakDetail/$1');
     $routes->get('slip-gaji/cetak-rekap/(:num)', 'SlipGajiController::cetakRekap/$1');
 });
-
-// // Route sementara untuk test
-//  $routes->get('/test-gaji', function () {
-//     $service = new \App\Libraries\PenggajianService();
-
-//     echo "<h3>Test 1: Pajak 0%</h3>";
-//     echo "PPh21 untuk 4.000.000 = " . $service->hitungPPh21(4000000) . "<br>";
-
-//     echo "<h3>Test 2: Pajak 5%</h3>";
-//     echo "PPh21 untuk 8.000.000 = " . $service->hitungPPh21(8000000) . "<br>";
-
-//     echo "<h3>Test 3: Prorata (Akses Private Method)</h3>";
-//     $method = new \ReflectionMethod($service, 'hitungUpahProrata');
-//     $method->setAccessible(true);
-    
-//     // Gaji Pokok 5.000.000, Tunjangan 1.000.000, Masuk 15 hari
-//     $hasil = $method->invoke($service, 5000000, 1000000, 15);
-    
-//     echo "Gaji Pokok (Masuk 15 hari) = " . $hasil['gaji_pokok'] . "<br>";
-//     echo "Tunjangan (Masuk 15 hari) = " . $hasil['tunjangan'] . "<br>";
-// });

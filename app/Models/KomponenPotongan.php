@@ -41,6 +41,7 @@ class KomponenPotongan extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    // Method untuk menghitung total potongan untuk karyawan tertentu pada periode tertentu
     public function getTotalPotongan($idKaryawan, $periode)
     {
         return $this->selectSum('nominal')
