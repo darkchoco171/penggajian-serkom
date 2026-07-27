@@ -34,8 +34,11 @@
                         <a href="<?= base_url('penggajian/proses/' . $p['id']) ?>" class="btn btn-sm btn-primary">
                             <?= $p['status'] === 'final' ? 'Proses Ulang' : 'Proses' ?>
                         </a>
-                        <a href="<?= base_url('penggajian/edit/' . $p['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
-                        <a href="<?= base_url('penggajian/delete/' . $p['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus periode ini?')">Hapus</a>
+                        
+                        <?php if ($p['status'] === 'draft'): ?>
+                            <a href="<?= base_url('penggajian/edit/' . $p['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="<?= base_url('penggajian/delete/' . $p['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus periode ini?')">Hapus</a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
